@@ -6,6 +6,7 @@
   <title>Derrick's Label Studio 2.3</title>
 
   <!-- PWA & Mobile Web App Meta Tags -->
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e1b4b">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -494,19 +495,16 @@
       window.buildLabels();
     });
 
-    // Clear stale mobile service workers and caches on load
+    // PWA Service Worker Registration
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function(registrations) {
-        for (var reg of registrations) {
-          reg.unregister();
-        }
-      });
-    }
-    if ('caches' in window) {
-      caches.keys().then(function(names) {
-        for (var name of names) {
-          caches.delete(name);
-        }
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+          .then(function(reg) {
+            reg.update();
+          })
+          .catch(function(err) {
+            console.warn('SW registration failed:', err);
+          });
       });
     }
   </script>
