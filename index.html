@@ -6,7 +6,6 @@
   <title>Derrick's Label Studio</title>
 
   <!-- PWA & Mobile Web App Meta Tags -->
-  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#1e1b4b">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -222,7 +221,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 1.2</h1>
+        <h1>Derrick's Label Studio</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live">ECC: Level H (30%)</span>
@@ -324,48 +323,132 @@
     };
 
     window.buildLabels = function() {
-      var sel = document.getElementById('labelType');
-      var startInp = document.getElementById('startNum');
-      var countInp = document.getElementById('labelCount');
-      var eccInp = document.getElementById('eccLevel');
-      var container = document.getElementById('labels-container');
-      var badge = document.getElementById('eccBadge');
-      if (!sel || !startInp || !countInp || !container) return;
+      try {
+        var sel = document.getElementById('labelType');
+        var startInp = document.getElementById('startNum');
+        var countInp = document.getElementById('labelCount');
+        var eccInp = document.getElementById('eccLevel');
+        var container = document.getElementById('labels-container');
+        var badge = document.getElementById('eccBadge');
+        if (!sel || !startInp || !countInp || !container) return;
 
-      var mode = sel.value;
-      var start = parseInt(startInp.value, 10) || 1;
-      var count = parseInt(countInp.value, 10) || 1;
-      var ecc = eccInp ? eccInp.value : 'H';
-      if (count < 1) count = 1;
-      if (count > 100) count = 100;
+        var mode = sel.value;
+        var start = parseInt(startInp.value, 10) || 1;
+        var count = parseInt(countInp.value, 10) || 1;
+        var ecc = eccInp ? eccInp.value : 'H';
+        if (count < 1) count = 1;
+        if (count > 100) count = 100;
 
-      if (badge) {
-        var pct = { 'L': '7%', 'M': '15%', 'Q': '25%', 'H': '30%' }[ecc] || '30%';
-        badge.textContent = 'ECC: Level ' + ecc + ' (' + pct + ')';
+        if (badge) {
+          var pct = { 'L': '7%', 'M': '15%', 'Q': '25%', 'H': '30%' }[ecc] || '30%';
+          badge.textContent = 'ECC: Level ' + ecc + ' (' + pct + ')';
+        }
+
+        container.innerHTML = '';
+
+        var title = "Curbside";
+        var fontSize = 100;
+        var iconKey = "bag_spark";
+        var qrPrefix = "Curbside";
+        var qrSuffix = "";
+
+        if (mode === 'curbside') {
+          title = "Curbside";
+          iconKey = "bag_spark";
+          qrPrefix = "Curbside";
+        } else if (mode === 'pickup') {
+          title = "Pickup";
+          iconKey = "car";
+          qrPrefix = "Pickup";
+        } else if (mode === 'ambient_f') {
+          title = "Ambient";
+          iconKey = "letter_f";
+          qrPrefix = "Ambient";
+          qrSuffix = " F";
+        } else if (mode === 'ambient_b') {
+          title = "Ambient";
+          iconKey = "letter_b";
+          qrPrefix = "Ambient";
+          qrSuffix = " B";
+        } else if (mode === 'ambient_ex') {
+          title = "AmbientEx";
+          iconKey = "tbag_question";
+          qrPrefix = "AmbientEx";
+        } else if (mode === 'chilled_ex') {
+          title = "ChilledEx";
+          iconKey = "chilled";
+          qrPrefix = "ChilledEx";
+        } else if (mode === 'freezer_ex') {
+          title = "FreezerEx";
+          iconKey = "frozen";
+          qrPrefix = "FreezerEx";
+        } else if (mode === 'delivery_f') {
+          title = "Delivery";
+          iconKey = "letter_f";
+          qrPrefix = "Delivery";
+          qrSuffix = " F";
+        } else if (mode === 'delivery_b') {
+          title = "Delivery";
+          iconKey = "letter_b";
+          qrPrefix = "Delivery";
+          qrSuffix = " B";
+        } else if (mode === 'office_security') {
+          title = "Office Security";
+          iconKey = "key";
+          qrPrefix = "Office Security";
+        } else if (mode === 'custom') {
+          var customTitleInp = document.getElementById('customTitle');
+          var customIconInp = document.getElementById('customIcon');
+          var userText = (customTitleInp && customTitleInp.value) ? customTitleInp.value.trim() : 'SPECIAL';
+          iconKey = customIconInp ? customIconInp.value : 'bag_spark';
+          title = userText;
+          qrPrefix = userText;
+        }
+
+        var iconSvg = ICONS[iconKey] || ICONS.bag_spark;
+        var htmlBuffer = '';
+
+        for (var i = 0; i < count; i++) {
+          var num = start + i;
+          var qrDataText = qrPrefix + " " + num + qrSuffix;
+          var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&ecc=" + ecc + "&data=" + encodeURIComponent(qrDataText);
+          var numFontSize = String(num).length > 2 ? 105 : 130;
+
+          htmlBuffer += '<div class="label-page">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 852 585">' +
+            '<rect width="852" height="585" fill="#ffffff"/>' +
+            '<text x="426" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="' + fontSize + '" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#000000">' + title + '</text>' +
+            '<text x="145" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="' + numFontSize + '" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#000000">' + num + '</text>' +
+            '<image href="' + qrUrl + '" xlink:href="' + qrUrl + '" x="276" y="230" width="300" height="300"/>' +
+            '<g transform="translate(707, 380)">' + iconSvg + '</g>' +
+            '</svg></div>';
+        }
+
+        container.innerHTML = htmlBuffer;
+      } catch (err) {
+        console.error("Error building labels:", err);
       }
+    };
 
-      container.innerHTML = '';
+    window.addEventListener('DOMContentLoaded', function() {
+      window.buildLabels();
+    });
 
-      var title = "Curbside";
-      var fontSize = 100;
-      var iconKey = "bag_spark";
-      var qrPrefix = "Curbside";
-      var qrSuffix = "";
-
-      if (mode === 'curbside') {
-        title = "Curbside";
-        fontSize = 100;
-        iconKey = "bag_spark";
-        qrPrefix = "Curbside";
-      } else if (mode === 'pickup') {
-        title = "Pickup";
-        fontSize = 100;
-        iconKey = "car";
-        qrPrefix = "Pickup";
-      } else if (mode === 'ambient_f') {
-        title = "Ambient";
-        fontSize = 100;
-        iconKey = "letter_f";
-        qrPrefix = "Ambient";
-        qrSuffix = " F";
-      } else if (mode === 'ambient_b
+    // Clear stale mobile service workers and caches on load
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for (var reg of registrations) {
+          reg.unregister();
+        }
+      });
+    }
+    if ('caches' in window) {
+      caches.keys().then(function(names) {
+        for (var name of names) {
+          caches.delete(name);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
