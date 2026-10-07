@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 2.6</title>
+  <title>Derrick's Label Studio 2.7</title>
 
   <!-- Prevent HTTP disk caching of index page -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -16,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 2.6">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 2.7">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -281,7 +281,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 2.6</h1>
+        <h1>Derrick's Label Studio 2.7</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -301,6 +301,7 @@
           <option value="delivery_f">Delivery F</option>
           <option value="delivery_b">Delivery B</option>
           <option value="office_security">Office Security</option>
+          <option value="retail_claims">Retail Claims</option>
           <option value="custom">Custom</option>
         </select>
       </div>
@@ -325,6 +326,12 @@
               <option value="letter_b">Letter B</option>
               <option value="key">Key</option>
               <option value="truck">Delivery Truck</option>
+              <option value="pig">Pig</option>
+              <option value="cow">Cow</option>
+              <option value="chicken">Chicken</option>
+              <option value="cheese">Cheese</option>
+              <option value="deli_slicer">Deli Slicer</option>
+              <option value="claims_tag">Retail Claims (Tag)</option>
             </select>
             <label class="circle-toggle" title="Toggle black background circle">
               <input type="checkbox" id="badgeCircleCheck" checked onchange="window.buildLabels()">
@@ -347,6 +354,12 @@
               <option value="letter_b">Letter B</option>
               <option value="key">Key</option>
               <option value="truck">Delivery Truck</option>
+              <option value="pig">Pig</option>
+              <option value="cow">Cow</option>
+              <option value="chicken">Chicken</option>
+              <option value="cheese">Cheese</option>
+              <option value="deli_slicer">Deli Slicer</option>
+              <option value="claims_tag">Retail Claims (Tag)</option>
             </select>
             <label class="circle-toggle" title="Toggle black background circle">
               <input type="checkbox" id="rawCircleCheck" onchange="window.buildLabels()">
@@ -395,7 +408,7 @@
         '<g transform="translate(0, 14) scale(0.9)" stroke="#000000" stroke-width="4.2" stroke-linecap="round">' +
           '<line x1="0" y1="-14" x2="0" y2="-6"/><line x1="0" y1="6" x2="0" y2="14"/>' +
           '<line x1="-12.1" y1="-7" x2="-5.2" y2="-3"/><line x1="5.2" y1="3" x2="12.1" y2="7"/>' +
-          '<line x1="-12.1" y1="7" x2="-5.2" y2="3"/><line x1="5.2" y1="-3" x2="12.1" y2="-7"/>' +
+          '<line x1="-12.1" y17" x2="-5.2" y2="3"/><line x1="5.2" y1="-3" x2="12.1" y2="-7"/>' +
         '</g></g>',
       tbag_question: '<circle cx="0" cy="0" r="62" fill="#000000"/><g transform="translate(0, -2)">' +
         '<path d="M -26 -28 C -26 -30 -24 -32 -21 -32 L -13 -32 C -10 -32 -8 -30 -8 -27 L -8 -13 C -8 -10 -6 -8 0 -8 C 6 -8 8 -10 8 -13 L 8 -27 C 8 -30 10 -32 13 -32 L 21 -32 C 24 -32 26 -30 26 -28 L 27 28 C 27 32 24 35 20 35 L -20 35 C -24 35 -27 32 -27 28 Z" fill="#ffffff"/>' +
@@ -450,7 +463,58 @@
           '<rect x="-34" y="9" width="66" height="4"/>' +
           '<circle cx="-20" cy="18" r="8" fill="#ffffff"/><circle cx="-20" cy="18" r="3.5" fill="#000000"/>' +
           '<circle cx="21" cy="18" r="8" fill="#ffffff"/><circle cx="21" cy="18" r="3.5" fill="#000000"/>' +
-        '</g></g>'
+        '</g></g>',
+      pig: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 1)">' +
+        '<path d="M -26 -16 L -20 -32 L -9 -22 Z M 26 -16 L 20 -32 L 9 -22 Z"/>' +
+        '<circle cx="0" cy="-2" r="30"/>' +
+        '<ellipse cx="0" cy="9" rx="14" ry="9" fill="#000000"/>' +
+        '<circle cx="-5" cy="9" r="3" fill="#ffffff"/>' +
+        '<circle cx="5" cy="9" r="3" fill="#ffffff"/>' +
+        '<circle cx="-10" cy="-9" r="4.5" fill="#000000"/>' +
+        '<circle cx="10" cy="-9" r="4.5" fill="#000000"/>' +
+        '</g>',
+      cow: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 0)">' +
+        '<path d="M -22 -14 C -36 -28 -30 -36 -24 -36 C -20 -36 -14 -24 -14 -18 Z M 22 -14 C 36 -28 30 -36 24 -36 C 20 -36 14 -24 14 -18 Z"/>' +
+        '<path d="M -18 -8 C -36 -8 -36 2 -20 2 Z M 18 -8 C 36 -8 36 2 20 2 Z"/>' +
+        '<path d="M -18 -26 L 18 -26 L 16 12 L -16 12 Z"/>' +
+        '<path d="M -16 -26 L 0 -26 L -6 -6 L -16 -12 Z" fill="#000000"/>' +
+        '<ellipse cx="0" cy="17" rx="20" ry="12" fill="#ffffff"/>' +
+        '<ellipse cx="-7" cy="17" rx="3.5" ry="4" fill="#000000"/>' +
+        '<ellipse cx="7" cy="17" rx="3.5" ry="4" fill="#000000"/>' +
+        '<circle cx="-10" cy="-9" r="3.5" fill="#000000"/>' +
+        '<circle cx="10" cy="-9" r="3.5" fill="#000000"/>' +
+        '</g>',
+      chicken: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 2)">' +
+        '<path d="M -9 -24 C -9 -34 -1 -34 0 -25 C 2 -34 9 -34 9 -24 Z"/>' +
+        '<circle cx="0" cy="-8" r="20"/>' +
+        '<path d="M 0 1 C -7 1 -6 12 0 13 C 6 12 7 1 0 1 Z"/>' +
+        '<polygon points="-4,-7 0,-15 13,-6" fill="#000000"/>' +
+        '<circle cx="-6" cy="-11" r="3.5" fill="#000000"/>' +
+        '<path d="M -19 0 C -26 8 -24 23 -14 26 C -4 28 2 22 2 12 C -6 12 -14 8 -19 0 Z"/>' +
+        '<path d="M -6 24 L -6 32 M 4 24 L 4 32" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>' +
+        '</g>',
+      cheese: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 2)">' +
+        '<path d="M -26 12 L 28 12 L 28 -4 L -4 -22 L -26 -6 Z"/>' +
+        '<circle cx="-12" cy="4" r="5" fill="#000000"/>' +
+        '<circle cx="12" cy="4" r="6.5" fill="#000000"/>' +
+        '<circle cx="2" cy="-4" r="4" fill="#000000"/>' +
+        '<circle cx="21" cy="-8" r="3.5" fill="#000000"/>' +
+        '<path d="M -26 -6 L 10 -4 L 28 -4" stroke="#000000" stroke-width="2.5" fill="none"/>' +
+        '</g>',
+      deli_slicer: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 2)">' +
+        '<rect x="-28" y="16" width="56" height="8" rx="2"/>' +
+        '<circle cx="6" cy="-3" r="21"/>' +
+        '<circle cx="6" cy="-3" r="14" fill="#000000"/>' +
+        '<circle cx="6" cy="-3" r="4.5" fill="#ffffff"/>' +
+        '<polygon points="-24,14 -12,-8 -2,-8 -12,14"/>' +
+        '<rect x="-18" y="-18" width="6" height="12" rx="2"/>' +
+        '</g>',
+      claims_tag: '<circle cx="0" cy="0" r="62" fill="#000000"/><g transform="translate(0, 1)">' +
+        '<path d="M -16 -28 L 8 -28 L 26 -10 L 2 -10 L -16 -28 Z" fill="none" stroke="#ffffff" stroke-width="2"/>' +
+        '<path d="M -24 -16 L 6 -16 L 26 4 L -4 28 L -24 8 Z" fill="#ffffff"/>' +
+        '<circle cx="-14" cy="-6" r="4" fill="#000000"/>' +
+        '<text x="6" y="11" font-family="system-ui, sans-serif" font-size="18" font-weight="900" text-anchor="middle" fill="#000000">$</text>' +
+        '</g>'
     };
 
     var RAW_ICONS = {
@@ -515,7 +579,58 @@
           '<rect x="-34" y="9" width="66" height="4"/>' +
           '<circle cx="-20" cy="18" r="8" fill="#000000"/><circle cx="-20" cy="18" r="3.5" fill="#ffffff"/>' +
           '<circle cx="21" cy="18" r="8" fill="#000000"/><circle cx="21" cy="18" r="3.5" fill="#ffffff"/>' +
-        '</g></g>'
+        '</g></g>',
+      pig: '<g transform="scale(1.15)"><g fill="#000000">' +
+        '<path d="M -26 -16 L -20 -32 L -9 -22 Z M 26 -16 L 20 -32 L 9 -22 Z"/>' +
+        '<circle cx="0" cy="-2" r="30"/>' +
+        '<ellipse cx="0" cy="9" rx="14" ry="9" fill="#ffffff"/>' +
+        '<circle cx="-5" cy="9" r="3" fill="#000000"/>' +
+        '<circle cx="5" cy="9" r="3" fill="#000000"/>' +
+        '<circle cx="-10" cy="-9" r="4.5" fill="#ffffff"/>' +
+        '<circle cx="10" cy="-9" r="4.5" fill="#ffffff"/>' +
+        '</g></g>',
+      cow: '<g transform="scale(1.15)"><g fill="#000000">' +
+        '<path d="M -22 -14 C -36 -28 -30 -36 -24 -36 C -20 -36 -14 -24 -14 -18 Z M 22 -14 C 36 -28 30 -36 24 -36 C 20 -36 14 -24 14 -18 Z"/>' +
+        '<path d="M -18 -8 C -36 -8 -36 2 -20 2 Z M 18 -8 C 36 -8 36 2 20 2 Z"/>' +
+        '<path d="M -18 -26 L 18 -26 L 16 12 L -16 12 Z"/>' +
+        '<path d="M -16 -26 L 0 -26 L -6 -6 L -16 -12 Z" fill="#ffffff"/>' +
+        '<ellipse cx="0" cy="17" rx="20" ry="12" fill="#000000"/>' +
+        '<ellipse cx="-7" cy="17" rx="3.5" ry="4" fill="#ffffff"/>' +
+        '<ellipse cx="7" cy="17" rx="3.5" ry="4" fill="#ffffff"/>' +
+        '<circle cx="-10" cy="-9" r="3.5" fill="#ffffff"/>' +
+        '<circle cx="10" cy="-9" r="3.5" fill="#ffffff"/>' +
+        '</g></g>',
+      chicken: '<g transform="scale(1.15)"><g fill="#000000">' +
+        '<path d="M -9 -24 C -9 -34 -1 -34 0 -25 C 2 -34 9 -34 9 -24 Z"/>' +
+        '<circle cx="0" cy="-8" r="20"/>' +
+        '<path d="M 0 1 C -7 1 -6 12 0 13 C 6 12 7 1 0 1 Z"/>' +
+        '<polygon points="-4,-7 0,-15 13,-6" fill="#ffffff"/>' +
+        '<circle cx="-6" cy="-11" r="3.5" fill="#ffffff"/>' +
+        '<path d="M -19 0 C -26 8 -24 23 -14 26 C -4 28 2 22 2 12 C -6 12 -14 8 -19 0 Z"/>' +
+        '<path d="M -6 24 L -6 32 M 4 24 L 4 32" stroke="#000000" stroke-width="3" stroke-linecap="round"/>' +
+        '</g></g>',
+      cheese: '<g transform="scale(1.15)"><g fill="#000000">' +
+        '<path d="M -26 12 L 28 12 L 28 -4 L -4 -22 L -26 -6 Z"/>' +
+        '<circle cx="-12" cy="4" r="5" fill="#ffffff"/>' +
+        '<circle cx="12" cy="4" r="6.5" fill="#ffffff"/>' +
+        '<circle cx="2" cy="-4" r="4" fill="#ffffff"/>' +
+        '<circle cx="21" cy="-8" r="3.5" fill="#ffffff"/>' +
+        '<path d="M -26 -6 L 10 -4 L 28 -4" stroke="#ffffff" stroke-width="2.5" fill="none"/>' +
+        '</g></g>',
+      deli_slicer: '<g transform="scale(1.15)"><g fill="#000000">' +
+        '<rect x="-28" y="16" width="56" height="8" rx="2"/>' +
+        '<circle cx="6" cy="-3" r="21"/>' +
+        '<circle cx="6" cy="-3" r="14" fill="#ffffff"/>' +
+        '<circle cx="6" cy="-3" r="4.5" fill="#000000"/>' +
+        '<polygon points="-24,14 -12,-8 -2,-8 -12,14"/>' +
+        '<rect x="-18" y="-18" width="6" height="12" rx="2"/>' +
+        '</g></g>',
+      claims_tag: '<g transform="scale(1.15)">' +
+        '<path d="M -16 -28 L 8 -28 L 26 -10 L 2 -10 L -16 -28 Z" fill="none" stroke="#000000" stroke-width="2.5"/>' +
+        '<path d="M -24 -16 L 6 -16 L 26 4 L -4 28 L -24 8 Z" fill="#000000"/>' +
+        '<circle cx="-14" cy="-6" r="4" fill="#ffffff"/>' +
+        '<text x="6" y="11" font-family="system-ui, sans-serif" font-size="18" font-weight="900" text-anchor="middle" fill="#ffffff">$</text>' +
+        '</g>'
     };
     window.updateCustomFieldsVisibility = function() {
       var sel = document.getElementById('labelType');
@@ -540,8 +655,8 @@
           rawField.className = 'field col-span-2';
         }
       } else {
-        if (titleField) titleField.className = 'field';
-        if (badgeField) badgeField.className = 'field';
+        if (titleField) titleField.className = 'field col-span-2';
+        if (badgeField) badgeField.className = 'field col-span-2';
         if (rawField) {
           rawField.style.display = 'none';
         }
@@ -657,6 +772,11 @@
           fontSize = 115;
           iconKey = "key";
           qrPrefix = "Office Security";
+        } else if (mode === 'retail_claims') {
+          title = "Retail Claims";
+          fontSize = 118;
+          iconKey = "claims_tag";
+          qrPrefix = "Retail Claims";
         } else if (isCustom) {
           var customTitleInp = document.getElementById('customTitle');
           var customIconInp = document.getElementById('customIcon');
