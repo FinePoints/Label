@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f46e5"/>
+      <stop offset="100%" stop-color="#6366f1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="512" height="512" rx="120" fill="url(#bg)"/>
+
+  <!-- Outer Border Ring -->
+  <rect x="12" y="12" width="488" height="488" rx="108" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="6"/>
+
+  <!-- Centered Thermal Label Graphic (2.84 x 1.95 ratio) -->
+  <rect x="76" y="126" width="360" height="260" rx="24" fill="#ffffff" filter="drop-shadow(0 14px 28px rgba(0,0,0,0.5))"/>
+
+  <!-- Label Header Bar -->
+  <rect x="106" y="156" width="300" height="24" rx="6" fill="#0f172a"/>
+
+  <!-- Left: Stylized Barcode / Number Line -->
+  <rect x="110" y="210" width="46" height="12" rx="3" fill="#6366f1"/>
+  <rect x="110" y="232" width="60" height="42" rx="4" fill="#0f172a"/>
+
+  <!-- Center: Stylized QR Matrix Marker -->
+  <rect x="196" y="200" width="120" height="120" rx="14" fill="#0f172a"/>
+  <!-- Finder Corners -->
+  <rect x="206" y="210" width="34" height="34" fill="#ffffff"/>
+  <rect x="214" y="218" width="18" height="18" fill="#0f172a"/>
+  <rect x="272" y="210" width="34" height="34" fill="#ffffff"/>
+  <rect x="280" y="218" width="18" height="18" fill="#0f172a"/>
+  <rect x="206" y="276" width="34" height="34" fill="#ffffff"/>
+  <rect x="214" y="284" width="18" height="18" fill="#0f172a"/>
+  <rect x="272" y="276" width="16" height="16" fill="#ffffff"/>
+  <rect x="290" y="294" width="16" height="16" fill="#ffffff"/>
+
+  <!-- Right: Bag Badge Circle -->
+  <circle cx="376" cy="260" r="32" fill="#0f172a"/>
+  <circle cx="376" cy="260" r="24" fill="url(#cardGrad)"/>
+  <path d="M371 250c0-3 2-5 5-5s5 2 5 5v12c0 4-3 7-7 7s-7-3-7-7z" fill="#ffffff"/>
+</svg>
