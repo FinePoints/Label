@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Derrick's Label Studio 2.5</title>
 
-  <!-- Prevent HTTP disk caching of the index page -->
+  <!-- Prevent HTTP disk caching of index page -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -73,12 +73,33 @@
       font-size: 11px;
       color: #94a3b8;
     }
+    
     .badge-live {
       padding: 4px 10px;
       border-radius: 9999px;
       font-size: 11px;
       font-weight: 700;
       transition: all 0.25s ease;
+    }
+    .badge-l {
+      color: #f87171 !important;
+      background: rgba(239, 68, 68, 0.15) !important;
+      border: 1px solid rgba(248, 113, 113, 0.35) !important;
+    }
+    .badge-m {
+      color: #fb923c !important;
+      background: rgba(249, 115, 22, 0.15) !important;
+      border: 1px solid rgba(251, 146, 60, 0.35) !important;
+    }
+    .badge-q {
+      color: #facc15 !important;
+      background: rgba(234, 179, 8, 0.15) !important;
+      border: 1px solid rgba(250, 204, 21, 0.35) !important;
+    }
+    .badge-h {
+      color: #34d399 !important;
+      background: rgba(16, 185, 129, 0.15) !important;
+      border: 1px solid rgba(52, 211, 153, 0.35) !important;
     }
 
     .controls-grid {
@@ -227,7 +248,7 @@
         <h1>Derrick's Label Studio 2.5</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
-      <span id="eccBadge" class="badge-live">ECC: Level H (30%)</span>
+      <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
     </div>
 
     <div class="controls-grid">
@@ -346,7 +367,7 @@
         '</g></g>',
       frozen: '<circle cx="0" cy="0" r="62" fill="#000000"/>' +
         '<g stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
-          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="-16" x2="27.7" y2="-16"/>' +
+          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="16" x2="27.7" y2="-16"/>' +
           '<path d="M -9 -21 L 0 -15 L 9 -21"/><path d="M -9 21 L 0 15 L 9 21"/>' +
           '<path d="M -23 -3 L -14 -8 L -14 -18"/><path d="M 23 3 L 14 8 L 14 18"/>' +
           '<path d="M -23 3 L -14 8 L -14 18"/><path d="M 23 -3 L 14 -8 L 14 -18"/>' +
@@ -423,4 +444,237 @@
           '<path d="M -28 -5 L -17 -27 L 16 -27 L 28 -5 Z"/>' +
           '<path d="M -22 -7 L -13 -23 L 13 -23 L 22 -7 Z" fill="#ffffff"/>' +
           '<line x1="-1" y1="-23" x2="-1" y2="-7" stroke="#000000" stroke-width="3"/>' +
-          '<path d="M -37 -5 C -37 -5 -39 12 -35 16 C -31 18 -26 18 -25 18 C -24 11 -18 6 -10 6 C -2 6 4 11 5 18 L 15 18 C 16 11 22 6 30 6 C 38 6 44 11 45 18 C 47 18 49 16 49 12 C
+          '<path d="M -37 -5 C -37 -5 -39 12 -35 16 C -31 18 -26 18 -25 18 C -24 11 -18 6 -10 6 C -2 6 4 11 5 18 L 15 18 C 16 11 22 6 30 6 C 38 6 44 11 45 18 C 47 18 49 16 49 12 C 49 6 46 -3 37 -5 Z"/>' +
+          '<circle cx="-17.5" cy="18" r="7.5" fill="#ffffff"/><circle cx="-17.5" cy="18" r="3.5" fill="#000000"/>' +
+          '<circle cx="22.5" cy="18" r="7.5" fill="#ffffff"/><circle cx="22.5" cy="18" r="3.5" fill="#000000"/>' +
+        '</g></g>',
+      letter_f: '<path d="M -22 -32 L 22 -32 L 22 -19 L -7 -19 L -7 -6 L 18 -6 L 18 7 L -7 7 L -7 32 L -22 32 Z" fill="#000000" transform="scale(1.2)"/>',
+      letter_b: '<path d="M -23 -32 L 8 -32 C 18 -32 23 -26 23 -17 C 23 -11 20 -7 15 -5 C 21 -3 25 2 25 12 C 25 22 19 32 8 32 L -23 32 Z ' +
+        'M -8 -20 L 6 -20 C 10 -20 12 -18 12 -14 C 12 -10 10 -8 6 -8 L -8 -8 Z ' +
+        'M -8 5 L 7 5 C 11 5 13 8 13 13 C 13 17 11 20 7 20 L -8 20 Z" fill-rule="evenodd" fill="#000000" transform="scale(1.2)"/>',
+      key: '<g transform="translate(-1, 0) scale(1.15)">' +
+        '<path d="M 0 -45 L 18 -32 L 15 -10 L 7 -4 L -7 -4 L -15 -10 L -18 -32 Z" fill="#000000"/>' +
+        '<circle cx="0" cy="-26" r="5.5" fill="#ffffff"/>' +
+        '<path d="M -5 -4 L -5 42 L -2 46 L 1 44 L 3 36 L 7 32 L 4 26 L 9 18 L 4 12 L 10 4 L 5 -1 L 11 -4 L 7 -4 Z" fill="#000000"/>' +
+        '<line x1="-1" y1="0" x2="-1" y2="38" stroke="#ffffff" stroke-width="2.5"/></g>',
+      truck: '<g transform="translate(1, -2) scale(1.15)">' +
+        '<g fill="#000000">' +
+          '<rect x="-36" y="-25" width="44" height="34" rx="2"/>' +
+          '<path d="M 10 -14 L 24 -14 L 32 -3 L 34 9 L 10 9 Z"/>' +
+          '<path d="M 13 -11 L 22 -11 L 28 -3 L 13 -3 Z" fill="#ffffff"/>' +
+          '<rect x="-34" y="9" width="66" height="4"/>' +
+          '<circle cx="-20" cy="18" r="8" fill="#000000"/><circle cx="-20" cy="18" r="3.5" fill="#ffffff"/>' +
+          '<circle cx="21" cy="18" r="8" fill="#000000"/><circle cx="21" cy="18" r="3.5" fill="#ffffff"/>' +
+        '</g></g>'
+    };
+        window.updateCustomFieldsVisibility = function() {
+      var sel = document.getElementById('labelType');
+      var customRow = document.getElementById('customRow');
+      var startInp = document.getElementById('startNum');
+      var rawField = document.getElementById('rawIconField');
+      if (!sel || !customRow) return;
+
+      var isCustom = (sel.value === 'custom');
+      customRow.style.display = isCustom ? 'grid' : 'none';
+
+      var start = parseInt(startInp ? startInp.value : '1', 10);
+      if (rawField) {
+        rawField.style.display = (isCustom && start === 0) ? 'flex' : 'none';
+      }
+    };
+
+    window.handleTypeChange = function() {
+      window.updateCustomFieldsVisibility();
+      window.buildLabels();
+    };
+
+    window.handleStartChange = function() {
+      window.updateCustomFieldsVisibility();
+      window.buildLabels();
+    };
+
+    window.buildLabels = function() {
+      try {
+        var sel = document.getElementById('labelType');
+        var startInp = document.getElementById('startNum');
+        var countInp = document.getElementById('labelCount');
+        var eccInp = document.getElementById('eccLevel');
+        var container = document.getElementById('labels-container');
+        var badge = document.getElementById('eccBadge');
+        if (!sel || !startInp || !countInp || !container) return;
+
+        var mode = sel.value;
+        var rawStart = startInp.value != null ? String(startInp.value).trim() : '1';
+        var start = parseInt(rawStart, 10);
+        if (isNaN(start) || start < 0) start = 0;
+
+        var count = parseInt(countInp.value, 10) || 1;
+        var ecc = eccInp ? eccInp.value : 'H';
+        if (count < 1) count = 1;
+        if (count > 100) count = 100;
+
+        if (badge) {
+          var eccMap = {
+            'L': { pct: '7%', cls: 'badge-l' },
+            'M': { pct: '15%', cls: 'badge-m' },
+            'Q': { pct: '25%', cls: 'badge-q' },
+            'H': { pct: '30%', cls: 'badge-h' }
+          };
+          var targetTheme = eccMap[ecc] || eccMap['H'];
+          badge.textContent = 'ECC: Level ' + ecc + ' (' + targetTheme.pct + ')';
+          badge.className = 'badge-live ' + targetTheme.cls;
+        }
+
+        container.innerHTML = '';
+
+        var title = "Curbside";
+        var fontSize = 128;
+        var iconKey = "bag_spark";
+        var rawIconKey = "none";
+        var qrPrefix = "Curbside";
+        var qrSuffix = "";
+        var isCustom = (mode === 'custom');
+
+        if (mode === 'curbside') {
+          title = "Curbside";
+          fontSize = 128;
+          iconKey = "bag_spark";
+          qrPrefix = "Curbside";
+        } else if (mode === 'pickup') {
+          title = "Pickup";
+          fontSize = 128;
+          iconKey = "car";
+          qrPrefix = "Pickup";
+        } else if (mode === 'ambient_f') {
+          title = "Ambient";
+          fontSize = 128;
+          iconKey = "letter_f";
+          qrPrefix = "Ambient";
+          qrSuffix = " F";
+        } else if (mode === 'ambient_b') {
+          title = "Ambient";
+          fontSize = 128;
+          iconKey = "letter_b";
+          qrPrefix = "Ambient";
+          qrSuffix = " B";
+        } else if (mode === 'ambient_ex') {
+          title = "AmbientEx";
+          fontSize = 128;
+          iconKey = "tbag_question";
+          qrPrefix = "AmbientEx";
+        } else if (mode === 'chilled_ex') {
+          title = "ChilledEx";
+          fontSize = 128;
+          iconKey = "chilled";
+          qrPrefix = "ChilledEx";
+        } else if (mode === 'freezer_ex') {
+          title = "FreezerEx";
+          fontSize = 128;
+          iconKey = "frozen";
+          qrPrefix = "FreezerEx";
+        } else if (mode === 'delivery_f') {
+          title = "Delivery";
+          fontSize = 128;
+          iconKey = "letter_f";
+          qrPrefix = "Delivery";
+          qrSuffix = " F";
+        } else if (mode === 'delivery_b') {
+          title = "Delivery";
+          fontSize = 128;
+          iconKey = "letter_b";
+          qrPrefix = "Delivery";
+          qrSuffix = " B";
+        } else if (mode === 'office_security') {
+          title = "Office Security";
+          fontSize = 115;
+          iconKey = "key";
+          qrPrefix = "Office Security";
+        } else if (isCustom) {
+          var customTitleInp = document.getElementById('customTitle');
+          var customIconInp = document.getElementById('customIcon');
+          var customRawIconInp = document.getElementById('customRawIcon');
+          var userText = (customTitleInp && customTitleInp.value) ? customTitleInp.value.trim() : 'SPECIAL';
+          iconKey = customIconInp ? customIconInp.value : 'bag_spark';
+          rawIconKey = (start === 0 && customRawIconInp) ? customRawIconInp.value : 'none';
+          title = userText;
+          qrPrefix = userText;
+          fontSize = 128;
+        }
+
+        var badgeSvg = ICONS[iconKey] || '';
+        var rawSvg = RAW_ICONS[rawIconKey] || '';
+        var htmlBuffer = '';
+
+        for (var i = 0; i < count; i++) {
+          var num = start + i;
+          var hasNumber = !(isCustom && start === 0);
+
+          var qrDataText = hasNumber ? (qrPrefix + " " + num + qrSuffix) : qrPrefix;
+          var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&ecc=" + ecc + "&data=" + encodeURIComponent(qrDataText);
+          var numFontSize = String(num).length > 2 ? 105 : 130;
+
+          var leftContent = '';
+          if (hasNumber) {
+            leftContent = '<text x="145" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="' + numFontSize + '" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#000000">' + num + '</text>';
+          } else if (rawSvg) {
+            leftContent = '<g transform="translate(145, 380)">' + rawSvg + '</g>';
+          }
+
+          var rightContent = '';
+          if (badgeSvg) {
+            rightContent = '<g transform="translate(707, 380)">' + badgeSvg + '</g>';
+          }
+
+          htmlBuffer += '<div class="label-page">' +
+            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 852 585">' +
+            '<rect width="852" height="585" fill="#ffffff"/>' +
+            '<text x="426" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="' + fontSize + '" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#000000">' + title + '</text>' +
+            leftContent +
+            '<image href="' + qrUrl + '" xlink:href="' + qrUrl + '" x="276" y="230" width="300" height="300"/>' +
+            rightContent +
+            '</svg></div>';
+        }
+
+        container.innerHTML = htmlBuffer;
+      } catch (err) {
+        console.error("Error building labels:", err);
+      }
+    };
+
+    window.addEventListener('DOMContentLoaded', function() {
+      window.updateCustomFieldsVisibility();
+      window.buildLabels();
+    });
+
+    // PWA Service Worker Auto-Updater
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+          .then(function(reg) {
+            reg.update();
+            reg.addEventListener('updatefound', function() {
+              var newWorker = reg.installing;
+              if (!newWorker) return;
+              newWorker.addEventListener('statechange', function() {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  window.location.reload();
+                }
+              });
+            });
+          })
+          .catch(function(err) {
+            console.warn('SW registration failed:', err);
+          });
+
+        var refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', function() {
+          if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+          }
+        });
+      });
+    }
+  </script>
+</body>
+</html>
