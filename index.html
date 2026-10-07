@@ -3,7 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 2.3</title>
+  <title>Derrick's Label Studio 2.5</title>
+
+  <!-- Prevent HTTP disk caching of the index page -->
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
   <!-- PWA & Mobile Web App Meta Tags -->
   <link rel="manifest" href="manifest.json">
@@ -11,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 2.3">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 2.5">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -219,7 +224,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 2.3</h1>
+        <h1>Derrick's Label Studio 2.5</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live">ECC: Level H (30%)</span>
@@ -249,9 +254,25 @@
           <input type="text" id="customTitle" value="SPECIAL" oninput="window.buildLabels()">
         </div>
         <div class="field">
-          <label for="customIcon">Badge Icon</label>
+          <label for="customIcon">Badge Icon (Circle)</label>
           <select id="customIcon" onchange="window.buildLabels()">
+            <option value="none">(None)</option>
             <option value="bag_spark" selected>T-Bag (Spark)</option>
+            <option value="tbag_question">T-Bag (?)</option>
+            <option value="chilled">Chilled (Thermometer)</option>
+            <option value="frozen">Frozen (Snowflake)</option>
+            <option value="car">Car</option>
+            <option value="letter_f">Letter F</option>
+            <option value="letter_b">Letter B</option>
+            <option value="key">Key</option>
+            <option value="truck">Delivery Truck</option>
+          </select>
+        </div>
+        <div id="rawIconField" class="field col-span-2" style="display: none;">
+          <label for="customRawIcon">Left Icon (No Circle)</label>
+          <select id="customRawIcon" onchange="window.buildLabels()">
+            <option value="none" selected>(None)</option>
+            <option value="bag_spark">T-Bag (Spark)</option>
             <option value="tbag_question">T-Bag (?)</option>
             <option value="chilled">Chilled (Thermometer)</option>
             <option value="frozen">Frozen (Snowflake)</option>
@@ -266,7 +287,7 @@
 
       <div class="field">
         <label for="startNum">Start #</label>
-        <input type="number" id="startNum" value="1" min="1" oninput="window.buildLabels()">
+        <input type="number" id="startNum" value="1" min="0" oninput="window.handleStartChange()">
       </div>
 
       <div class="field">
@@ -295,6 +316,7 @@
 
   <script>
     var ICONS = {
+      none: '',
       bag_spark: '<circle cx="0" cy="0" r="62" fill="#000000"/><g transform="translate(0, -2)">' +
         '<path d="M -26 -28 C -26 -30 -24 -32 -21 -32 L -13 -32 C -10 -32 -8 -30 -8 -27 L -8 -13 C -8 -10 -6 -8 0 -8 C 6 -8 8 -10 8 -13 L 8 -27 C 8 -30 10 -32 13 -32 L 21 -32 C 24 -32 26 -30 26 -28 L 27 28 C 27 32 24 35 20 35 L -20 35 C -24 35 -27 32 -27 28 Z" fill="#ffffff"/>' +
         '<rect x="-22" y="-27" width="9" height="15" rx="3.5" fill="#000000"/>' +
@@ -324,7 +346,7 @@
         '</g></g>',
       frozen: '<circle cx="0" cy="0" r="62" fill="#000000"/>' +
         '<g stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
-          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="16" x2="27.7" y2="-16"/>' +
+          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="-16" x2="27.7" y2="-16"/>' +
           '<path d="M -9 -21 L 0 -15 L 9 -21"/><path d="M -9 21 L 0 15 L 9 21"/>' +
           '<path d="M -23 -3 L -14 -8 L -14 -18"/><path d="M 23 3 L 14 8 L 14 18"/>' +
           '<path d="M -23 3 L -14 8 L -14 18"/><path d="M 23 -3 L 14 -8 L 14 -18"/>' +
@@ -360,159 +382,45 @@
         '</g></g>'
     };
 
-    window.handleTypeChange = function() {
-      var sel = document.getElementById('labelType');
-      var customRow = document.getElementById('customRow');
-      if (sel && customRow) {
-        customRow.style.display = (sel.value === 'custom') ? 'grid' : 'none';
-      }
-      window.buildLabels();
-    };
-
-    window.buildLabels = function() {
-      try {
-        var sel = document.getElementById('labelType');
-        var startInp = document.getElementById('startNum');
-        var countInp = document.getElementById('labelCount');
-        var eccInp = document.getElementById('eccLevel');
-        var container = document.getElementById('labels-container');
-        var badge = document.getElementById('eccBadge');
-        if (!sel || !startInp || !countInp || !container) return;
-
-        var mode = sel.value;
-        var start = parseInt(startInp.value, 10) || 1;
-        var count = parseInt(countInp.value, 10) || 1;
-        var ecc = eccInp ? eccInp.value : 'H';
-        if (count < 1) count = 1;
-        if (count > 100) count = 100;
-
-        if (badge) {
-          var eccThemes = {
-            'L': { pct: '7%', color: '#f87171', bg: 'rgba(239, 68, 68, 0.15)', border: 'rgba(248, 113, 113, 0.35)' },
-            'M': { pct: '15%', color: '#fb923c', bg: 'rgba(249, 115, 22, 0.15)', border: 'rgba(251, 146, 60, 0.35)' },
-            'Q': { pct: '25%', color: '#facc15', bg: 'rgba(234, 179, 8, 0.15)', border: 'rgba(250, 204, 21, 0.35)' },
-            'H': { pct: '30%', color: '#34d399', bg: 'rgba(16, 185, 129, 0.15)', border: 'rgba(52, 211, 153, 0.35)' }
-          };
-          var theme = eccThemes[ecc] || eccThemes['H'];
-          badge.textContent = 'ECC: Level ' + ecc + ' (' + theme.pct + ')';
-          badge.style.color = theme.color;
-          badge.style.background = theme.bg;
-          badge.style.border = '1px solid ' + theme.border;
-        }
-
-        container.innerHTML = '';
-
-        var title = "Curbside";
-        var fontSize = 128;
-        var iconKey = "bag_spark";
-        var qrPrefix = "Curbside";
-        var qrSuffix = "";
-
-        if (mode === 'curbside') {
-          title = "Curbside";
-          fontSize = 128;
-          iconKey = "bag_spark";
-          qrPrefix = "Curbside";
-        } else if (mode === 'pickup') {
-          title = "Pickup";
-          fontSize = 128;
-          iconKey = "car";
-          qrPrefix = "Pickup";
-        } else if (mode === 'ambient_f') {
-          title = "Ambient";
-          fontSize = 128;
-          iconKey = "letter_f";
-          qrPrefix = "Ambient";
-          qrSuffix = " F";
-        } else if (mode === 'ambient_b') {
-          title = "Ambient";
-          fontSize = 128;
-          iconKey = "letter_b";
-          qrPrefix = "Ambient";
-          qrSuffix = " B";
-        } else if (mode === 'ambient_ex') {
-          title = "AmbientEx";
-          fontSize = 128;
-          iconKey = "tbag_question";
-          qrPrefix = "AmbientEx";
-        } else if (mode === 'chilled_ex') {
-          title = "ChilledEx";
-          fontSize = 128;
-          iconKey = "chilled";
-          qrPrefix = "ChilledEx";
-        } else if (mode === 'freezer_ex') {
-          title = "FreezerEx";
-          fontSize = 128;
-          iconKey = "frozen";
-          qrPrefix = "FreezerEx";
-        } else if (mode === 'delivery_f') {
-          title = "Delivery";
-          fontSize = 128;
-          iconKey = "letter_f";
-          qrPrefix = "Delivery";
-          qrSuffix = " F";
-        } else if (mode === 'delivery_b') {
-          title = "Delivery";
-          fontSize = 128;
-          iconKey = "letter_b";
-          qrPrefix = "Delivery";
-          qrSuffix = " B";
-        } else if (mode === 'office_security') {
-          title = "Office Security";
-          fontSize = 115;
-          iconKey = "key";
-          qrPrefix = "Office Security";
-        } else if (mode === 'custom') {
-          var customTitleInp = document.getElementById('customTitle');
-          var customIconInp = document.getElementById('customIcon');
-          var userText = (customTitleInp && customTitleInp.value) ? customTitleInp.value.trim() : 'SPECIAL';
-          iconKey = customIconInp ? customIconInp.value : 'bag_spark';
-          title = userText;
-          qrPrefix = userText;
-          fontSize = 128;
-        }
-
-        var iconSvg = ICONS[iconKey] || ICONS.bag_spark;
-        var htmlBuffer = '';
-
-        for (var i = 0; i < count; i++) {
-          var num = start + i;
-          var qrDataText = qrPrefix + " " + num + qrSuffix;
-          var qrUrl = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=0&ecc=" + ecc + "&data=" + encodeURIComponent(qrDataText);
-          var numFontSize = String(num).length > 2 ? 105 : 130;
-
-          htmlBuffer += '<div class="label-page">' +
-            '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 852 585">' +
-            '<rect width="852" height="585" fill="#ffffff"/>' +
-            '<text x="426" y="140" font-family="system-ui, -apple-system, sans-serif" font-size="' + fontSize + '" font-weight="700" letter-spacing="0.5" text-anchor="middle" fill="#000000">' + title + '</text>' +
-            '<text x="145" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="' + numFontSize + '" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#000000">' + num + '</text>' +
-            '<image href="' + qrUrl + '" xlink:href="' + qrUrl + '" x="276" y="230" width="300" height="300"/>' +
-            '<g transform="translate(707, 380)">' + iconSvg + '</g>' +
-            '</svg></div>';
-        }
-
-        container.innerHTML = htmlBuffer;
-      } catch (err) {
-        console.error("Error building labels:", err);
-      }
-    };
-
-    window.addEventListener('DOMContentLoaded', function() {
-      window.buildLabels();
-    });
-
-    // PWA Service Worker Registration
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
-          .then(function(reg) {
-            reg.update();
-          })
-          .catch(function(err) {
-            console.warn('SW registration failed:', err);
-          });
-      });
-    }
-  </script>
-</body>
-</html>
+    var RAW_ICONS = {
+      none: '',
+      bag_spark: '<g transform="translate(0, -5) scale(1.15)">' +
+        '<path d="M -26 -28 C -26 -30 -24 -32 -21 -32 L -13 -32 C -10 -32 -8 -30 -8 -27 L -8 -13 C -8 -10 -6 -8 0 -8 C 6 -8 8 -10 8 -13 L 8 -27 C 8 -30 10 -32 13 -32 L 21 -32 C 24 -32 26 -30 26 -28 L 27 28 C 27 32 24 35 20 35 L -20 35 C -24 35 -27 32 -27 28 Z" fill="#000000"/>' +
+        '<rect x="-22" y="-27" width="9" height="15" rx="3.5" fill="#ffffff"/>' +
+        '<rect x="13" y="-27" width="9" height="15" rx="3.5" fill="#ffffff"/>' +
+        '<g transform="translate(0, 14) scale(0.9)" stroke="#ffffff" stroke-width="4.2" stroke-linecap="round">' +
+          '<line x1="0" y1="-14" x2="0" y2="-6"/><line x1="0" y1="6" x2="0" y2="14"/>' +
+          '<line x1="-12.1" y1="-7" x2="-5.2" y2="-3"/><line x1="5.2" y1="3" x2="12.1" y2="7"/>' +
+          '<line x1="-12.1" y1="7" x2="-5.2" y2="3"/><line x1="5.2" y1="-3" x2="12.1" y2="-7"/>' +
+        '</g></g>',
+      tbag_question: '<g transform="translate(0, -5) scale(1.15)">' +
+        '<path d="M -26 -28 C -26 -30 -24 -32 -21 -32 L -13 -32 C -10 -32 -8 -30 -8 -27 L -8 -13 C -8 -10 -6 -8 0 -8 C 6 -8 8 -10 8 -13 L 8 -27 C 8 -30 10 -32 13 -32 L 21 -32 C 24 -32 26 -30 26 -28 L 27 28 C 27 32 24 35 20 35 L -20 35 C -24 35 -27 32 -27 28 Z" fill="#000000"/>' +
+        '<rect x="-22" y="-27" width="9" height="15" rx="3.5" fill="#ffffff"/>' +
+        '<rect x="13" y="-27" width="9" height="15" rx="3.5" fill="#ffffff"/>' +
+        '<text x="0" y="15" font-family="system-ui, sans-serif" font-size="34" font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#ffffff">?</text></g>',
+      chilled: '<g transform="translate(-10, -5) scale(1.25)">' +
+        '<g fill="#000000">' +
+          '<circle cx="-6" cy="18" r="14"/>' +
+          '<path d="M -11 18 L -11 -24 C -11 -27 -9 -29 -6 -29 C -3 -29 -1 -27 -1 -24 L -1 18 Z"/>' +
+          '<circle cx="-6" cy="18" r="7" fill="#ffffff"/>' +
+          '<line x1="-6" y1="18" x2="-6" y2="-14" stroke="#ffffff" stroke-width="4" stroke-linecap="round"/>' +
+          '<line x1="2" y1="-18" x2="7" y2="-18" stroke="#000000" stroke-width="3" stroke-linecap="round"/>' +
+          '<line x1="2" y1="-9" x2="7" y2="-9" stroke="#000000" stroke-width="3" stroke-linecap="round"/>' +
+          '<line x1="2" y1="0" x2="7" y2="0" stroke="#000000" stroke-width="3" stroke-linecap="round"/>' +
+          '<path d="M 22 2 C 22 2 12 16 12 24 C 12 30 16 34 22 34 C 28 34 32 30 32 24 C 32 16 22 2 22 2 Z"/>' +
+          '<circle cx="25" cy="24" r="2.5" fill="#ffffff"/>' +
+          '<path d="M 18 -18 C 18 -18 12 -9 12 -4 C 12 0 15 2 18 2 C 21 2 24 0 24 -4 C 24 -9 18 -18 18 -18 Z"/>' +
+        '</g></g>',
+      frozen: '<g transform="scale(1.2)">' +
+        '<g stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
+          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="16" x2="27.7" y2="-16"/>' +
+          '<path d="M -9 -21 L 0 -15 L 9 -21"/><path d="M -9 21 L 0 15 L 9 21"/>' +
+          '<path d="M -23 -3 L -14 -8 L -14 -18"/><path d="M 23 3 L 14 8 L 14 18"/>' +
+          '<path d="M -23 3 L -14 8 L -14 18"/><path d="M 23 -3 L 14 -8 L 14 -18"/>' +
+        '</g><circle cx="0" cy="0" r="5" fill="#000000"/></g>',
+      car: '<g transform="translate(-5, 0) scale(1.15)">' +
+        '<g fill="#000000">' +
+          '<path d="M -28 -5 L -17 -27 L 16 -27 L 28 -5 Z"/>' +
+          '<path d="M -22 -7 L -13 -23 L 13 -23 L 22 -7 Z" fill="#ffffff"/>' +
+          '<line x1="-1" y1="-23" x2="-1" y2="-7" stroke="#000000" stroke-width="3"/>' +
+          '<path d="M -37 -5 C -37 -5 -39 12 -35 16 C -31 18 -26 18 -25 18 C -24 11 -18 6 -10 6 C -2 6 4 11 5 18 L 15 18 C 16 11 22 6 30 6 C 38 6 44 11 45 18 C 47 18 49 16 49 12 C
