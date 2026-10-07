@@ -1,5 +1,5 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v2.6';
+const CACHE_NAME = 'label-studio-v2.7';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -19,7 +19,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First strategy: Always check the network first so edits appear immediately
+// Network-First strategy: Always fetch live network first
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
@@ -35,7 +35,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Stale-while-revalidate for local assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)
