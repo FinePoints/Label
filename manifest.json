@@ -1,10 +1,8 @@
 {
-  "name": "Derrick's Label Studio",
-  "short_name": "Label Studio",
-  "description": "Direct thermal label generator for fulfillment and staging.",
+  "name": "Derrick's Label Studio 2.5",
+  "short_name": "Label Studio 2.5",
   "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#020617",
   "theme_color": "#1e1b4b",
   "icons": [
