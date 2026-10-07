@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 2.5</title>
+  <title>Derrick's Label Studio 2.6</title>
 
   <!-- Prevent HTTP disk caching of index page -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -16,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 2.5">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 2.6">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -144,6 +144,42 @@
       color: #ffffff;
     }
 
+    .icon-field-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .icon-field-row select {
+      flex: 1;
+    }
+    .circle-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      height: 44px;
+      padding: 0 10px;
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+    .circle-toggle input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #6366f1;
+      cursor: pointer;
+      margin: 0;
+    }
+    .circle-toggle span {
+      font-size: 11px;
+      font-weight: 700;
+      color: #cbd5e1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
     .custom-row {
       display: none;
       grid-template-columns: 1fr 1fr;
@@ -245,7 +281,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 2.5</h1>
+        <h1>Derrick's Label Studio 2.6</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -270,39 +306,53 @@
       </div>
 
       <div id="customRow" class="custom-row col-span-2">
-        <div class="field">
+        <div id="customTitleField" class="field col-span-2">
           <label for="customTitle">Custom Header</label>
           <input type="text" id="customTitle" value="SPECIAL" oninput="window.buildLabels()">
         </div>
-        <div class="field">
-          <label for="customIcon">Badge Icon (Circle)</label>
-          <select id="customIcon" onchange="window.buildLabels()">
-            <option value="none">(None)</option>
-            <option value="bag_spark" selected>T-Bag (Spark)</option>
-            <option value="tbag_question">T-Bag (?)</option>
-            <option value="chilled">Chilled (Thermometer)</option>
-            <option value="frozen">Frozen (Snowflake)</option>
-            <option value="car">Car</option>
-            <option value="letter_f">Letter F</option>
-            <option value="letter_b">Letter B</option>
-            <option value="key">Key</option>
-            <option value="truck">Delivery Truck</option>
-          </select>
+
+        <div id="badgeIconField" class="field col-span-2">
+          <label for="customIcon">Badge Icon</label>
+          <div class="icon-field-row">
+            <select id="customIcon" onchange="window.buildLabels()">
+              <option value="none">(None)</option>
+              <option value="bag_spark" selected>T-Bag (Spark)</option>
+              <option value="tbag_question">T-Bag (?)</option>
+              <option value="chilled">Chilled (Thermometer)</option>
+              <option value="frozen">Frozen (Snowflake)</option>
+              <option value="car">Car</option>
+              <option value="letter_f">Letter F</option>
+              <option value="letter_b">Letter B</option>
+              <option value="key">Key</option>
+              <option value="truck">Delivery Truck</option>
+            </select>
+            <label class="circle-toggle" title="Toggle black background circle">
+              <input type="checkbox" id="badgeCircleCheck" checked onchange="window.buildLabels()">
+              <span>Circle?</span>
+            </label>
+          </div>
         </div>
+
         <div id="rawIconField" class="field col-span-2" style="display: none;">
-          <label for="customRawIcon">Left Icon (No Circle)</label>
-          <select id="customRawIcon" onchange="window.buildLabels()">
-            <option value="none" selected>(None)</option>
-            <option value="bag_spark">T-Bag (Spark)</option>
-            <option value="tbag_question">T-Bag (?)</option>
-            <option value="chilled">Chilled (Thermometer)</option>
-            <option value="frozen">Frozen (Snowflake)</option>
-            <option value="car">Car</option>
-            <option value="letter_f">Letter F</option>
-            <option value="letter_b">Letter B</option>
-            <option value="key">Key</option>
-            <option value="truck">Delivery Truck</option>
-          </select>
+          <label for="customRawIcon">Left Icon</label>
+          <div class="icon-field-row">
+            <select id="customRawIcon" onchange="window.buildLabels()">
+              <option value="none" selected>(None)</option>
+              <option value="bag_spark">T-Bag (Spark)</option>
+              <option value="tbag_question">T-Bag (?)</option>
+              <option value="chilled">Chilled (Thermometer)</option>
+              <option value="frozen">Frozen (Snowflake)</option>
+              <option value="car">Car</option>
+              <option value="letter_f">Letter F</option>
+              <option value="letter_b">Letter B</option>
+              <option value="key">Key</option>
+              <option value="truck">Delivery Truck</option>
+            </select>
+            <label class="circle-toggle" title="Toggle black background circle">
+              <input type="checkbox" id="rawCircleCheck" onchange="window.buildLabels()">
+              <span>Circle?</span>
+            </label>
+          </div>
         </div>
       </div>
 
@@ -467,10 +517,12 @@
           '<circle cx="21" cy="18" r="8" fill="#000000"/><circle cx="21" cy="18" r="3.5" fill="#ffffff"/>' +
         '</g></g>'
     };
-        window.updateCustomFieldsVisibility = function() {
+    window.updateCustomFieldsVisibility = function() {
       var sel = document.getElementById('labelType');
       var customRow = document.getElementById('customRow');
       var startInp = document.getElementById('startNum');
+      var titleField = document.getElementById('customTitleField');
+      var badgeField = document.getElementById('badgeIconField');
       var rawField = document.getElementById('rawIconField');
       if (!sel || !customRow) return;
 
@@ -478,8 +530,21 @@
       customRow.style.display = isCustom ? 'grid' : 'none';
 
       var start = parseInt(startInp ? startInp.value : '1', 10);
-      if (rawField) {
-        rawField.style.display = (isCustom && start === 0) ? 'flex' : 'none';
+      if (isNaN(start) || start < 0) start = 0;
+
+      if (isCustom && start === 0) {
+        if (titleField) titleField.className = 'field col-span-2';
+        if (badgeField) badgeField.className = 'field col-span-2';
+        if (rawField) {
+          rawField.style.display = 'flex';
+          rawField.className = 'field col-span-2';
+        }
+      } else {
+        if (titleField) titleField.className = 'field';
+        if (badgeField) badgeField.className = 'field';
+        if (rawField) {
+          rawField.style.display = 'none';
+        }
       }
     };
 
@@ -534,6 +599,9 @@
         var qrPrefix = "Curbside";
         var qrSuffix = "";
         var isCustom = (mode === 'custom');
+
+        var badgeCircle = true;
+        var leftCircle = false;
 
         if (mode === 'curbside') {
           title = "Curbside";
@@ -593,16 +661,28 @@
           var customTitleInp = document.getElementById('customTitle');
           var customIconInp = document.getElementById('customIcon');
           var customRawIconInp = document.getElementById('customRawIcon');
+          var badgeCheck = document.getElementById('badgeCircleCheck');
+          var rawCheck = document.getElementById('rawCircleCheck');
+
           var userText = (customTitleInp && customTitleInp.value) ? customTitleInp.value.trim() : 'SPECIAL';
           iconKey = customIconInp ? customIconInp.value : 'bag_spark';
           rawIconKey = (start === 0 && customRawIconInp) ? customRawIconInp.value : 'none';
+
+          badgeCircle = badgeCheck ? badgeCheck.checked : true;
+          leftCircle = rawCheck ? rawCheck.checked : false;
+
           title = userText;
           qrPrefix = userText;
           fontSize = 128;
         }
 
-        var badgeSvg = ICONS[iconKey] || '';
-        var rawSvg = RAW_ICONS[rawIconKey] || '';
+        function renderIcon(key, hasCircle) {
+          if (!key || key === 'none') return '';
+          return hasCircle ? (ICONS[key] || '') : (RAW_ICONS[key] || '');
+        }
+
+        var rightSvg = renderIcon(iconKey, badgeCircle);
+        var leftSvg = renderIcon(rawIconKey, leftCircle);
         var htmlBuffer = '';
 
         for (var i = 0; i < count; i++) {
@@ -616,13 +696,13 @@
           var leftContent = '';
           if (hasNumber) {
             leftContent = '<text x="145" y="380" font-family="system-ui, -apple-system, sans-serif" font-size="' + numFontSize + '" font-weight="700" text-anchor="middle" dominant-baseline="central" fill="#000000">' + num + '</text>';
-          } else if (rawSvg) {
-            leftContent = '<g transform="translate(145, 380)">' + rawSvg + '</g>';
+          } else if (leftSvg) {
+            leftContent = '<g transform="translate(145, 380)">' + leftSvg + '</g>';
           }
 
           var rightContent = '';
-          if (badgeSvg) {
-            rightContent = '<g transform="translate(707, 380)">' + badgeSvg + '</g>';
+          if (rightSvg) {
+            rightContent = '<g transform="translate(707, 380)">' + rightSvg + '</g>';
           }
 
           htmlBuffer += '<div class="label-page">' +
