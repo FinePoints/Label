@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 2.7</title>
+  <title>Derrick's Label Studio 2.8</title>
 
   <!-- Prevent HTTP disk caching of index page -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -16,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 2.7">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 2.8">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -281,7 +281,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 2.7</h1>
+        <h1>Derrick's Label Studio 2.8</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -301,11 +301,74 @@
           <option value="delivery_f">Delivery F</option>
           <option value="delivery_b">Delivery B</option>
           <option value="office_security">Office Security</option>
-          <option value="retail_claims">Retail Claims</option>
+          <option value="text_only">Text Only</option>
           <option value="custom">Custom</option>
         </select>
       </div>
 
+      <!-- Text Only Mode Controls -->
+      <div id="textOnlyRow" class="custom-row col-span-2">
+        <div class="field col-span-2">
+          <label for="textOnlyContent">Center Text</label>
+          <input type="text" id="textOnlyContent" value="HOLD" oninput="window.buildLabels()">
+        </div>
+        <div class="field col-span-2">
+          <label for="topIcon">Top Icon (Middle)</label>
+          <div class="icon-field-row">
+            <select id="topIcon" onchange="window.buildLabels()">
+              <option value="none" selected>(None)</option>
+              <option value="bag_spark">T-Bag (Spark)</option>
+              <option value="tbag_question">T-Bag (?)</option>
+              <option value="chilled">Chilled (Thermometer)</option>
+              <option value="frozen">Frozen (Snowflake)</option>
+              <option value="car">Car</option>
+              <option value="letter_f">Letter F</option>
+              <option value="letter_b">Letter B</option>
+              <option value="key">Key</option>
+              <option value="truck">Delivery Truck</option>
+              <option value="pig">Pig</option>
+              <option value="cow">Cow</option>
+              <option value="chicken">Chicken</option>
+              <option value="cheese">Cheese</option>
+              <option value="deli_slicer">Deli Slicer</option>
+              <option value="claims_tag">Claims Tag</option>
+            </select>
+            <label class="circle-toggle" title="Toggle black background circle">
+              <input type="checkbox" id="topCircleCheck" onchange="window.buildLabels()">
+              <span>Circle?</span>
+            </label>
+          </div>
+        </div>
+        <div class="field col-span-2">
+          <label for="bottomIcon">Bottom Icon (Middle)</label>
+          <div class="icon-field-row">
+            <select id="bottomIcon" onchange="window.buildLabels()">
+              <option value="none" selected>(None)</option>
+              <option value="bag_spark">T-Bag (Spark)</option>
+              <option value="tbag_question">T-Bag (?)</option>
+              <option value="chilled">Chilled (Thermometer)</option>
+              <option value="frozen">Frozen (Snowflake)</option>
+              <option value="car">Car</option>
+              <option value="letter_f">Letter F</option>
+              <option value="letter_b">Letter B</option>
+              <option value="key">Key</option>
+              <option value="truck">Delivery Truck</option>
+              <option value="pig">Pig</option>
+              <option value="cow">Cow</option>
+              <option value="chicken">Chicken</option>
+              <option value="cheese">Cheese</option>
+              <option value="deli_slicer">Deli Slicer</option>
+              <option value="claims_tag">Claims Tag</option>
+            </select>
+            <label class="circle-toggle" title="Toggle black background circle">
+              <input type="checkbox" id="bottomCircleCheck" onchange="window.buildLabels()">
+              <span>Circle?</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Mode Controls -->
       <div id="customRow" class="custom-row col-span-2">
         <div id="customTitleField" class="field col-span-2">
           <label for="customTitle">Custom Header</label>
@@ -331,7 +394,7 @@
               <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
-              <option value="claims_tag">Retail Claims (Tag)</option>
+              <option value="claims_tag">Claims Tag</option>
             </select>
             <label class="circle-toggle" title="Toggle black background circle">
               <input type="checkbox" id="badgeCircleCheck" checked onchange="window.buildLabels()">
@@ -359,7 +422,7 @@
               <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
-              <option value="claims_tag">Retail Claims (Tag)</option>
+              <option value="claims_tag">Claims Tag</option>
             </select>
             <label class="circle-toggle" title="Toggle black background circle">
               <input type="checkbox" id="rawCircleCheck" onchange="window.buildLabels()">
@@ -369,7 +432,7 @@
         </div>
       </div>
 
-      <div class="field">
+      <div id="startNumField" class="field">
         <label for="startNum">Start #</label>
         <input type="number" id="startNum" value="1" min="0" oninput="window.handleStartChange()">
       </div>
@@ -379,7 +442,7 @@
         <input type="number" id="labelCount" value="1" min="1" max="100" oninput="window.buildLabels()">
       </div>
 
-      <div class="field col-span-2">
+      <div id="eccField" class="field col-span-2">
         <label for="eccLevel">Error Correction Level</label>
         <select id="eccLevel" onchange="window.buildLabels()">
           <option value="L">Level L (~7% recovery - Smallest modules)</option>
@@ -408,7 +471,7 @@
         '<g transform="translate(0, 14) scale(0.9)" stroke="#000000" stroke-width="4.2" stroke-linecap="round">' +
           '<line x1="0" y1="-14" x2="0" y2="-6"/><line x1="0" y1="6" x2="0" y2="14"/>' +
           '<line x1="-12.1" y1="-7" x2="-5.2" y2="-3"/><line x1="5.2" y1="3" x2="12.1" y2="7"/>' +
-          '<line x1="-12.1" y17" x2="-5.2" y2="3"/><line x1="5.2" y1="-3" x2="12.1" y2="-7"/>' +
+          '<line x1="-12.1" y1="7" x2="-5.2" y2="3"/><line x1="5.2" y1="-3" x2="12.1" y2="-7"/>' +
         '</g></g>',
       tbag_question: '<circle cx="0" cy="0" r="62" fill="#000000"/><g transform="translate(0, -2)">' +
         '<path d="M -26 -28 C -26 -30 -24 -32 -21 -32 L -13 -32 C -10 -32 -8 -30 -8 -27 L -8 -13 C -8 -10 -6 -8 0 -8 C 6 -8 8 -10 8 -13 L 8 -27 C 8 -30 10 -32 13 -32 L 21 -32 C 24 -32 26 -30 26 -28 L 27 28 C 27 32 24 35 20 35 L -20 35 C -24 35 -27 32 -27 28 Z" fill="#ffffff"/>' +
@@ -635,14 +698,26 @@
     window.updateCustomFieldsVisibility = function() {
       var sel = document.getElementById('labelType');
       var customRow = document.getElementById('customRow');
+      var textOnlyRow = document.getElementById('textOnlyRow');
       var startInp = document.getElementById('startNum');
+      var startNumField = document.getElementById('startNumField');
+      var eccField = document.getElementById('eccField');
+      var eccBadge = document.getElementById('eccBadge');
       var titleField = document.getElementById('customTitleField');
       var badgeField = document.getElementById('badgeIconField');
       var rawField = document.getElementById('rawIconField');
-      if (!sel || !customRow) return;
+      if (!sel) return;
 
-      var isCustom = (sel.value === 'custom');
-      customRow.style.display = isCustom ? 'grid' : 'none';
+      var mode = sel.value;
+      var isCustom = (mode === 'custom');
+      var isTextOnly = (mode === 'text_only');
+
+      if (customRow) customRow.style.display = isCustom ? 'grid' : 'none';
+      if (textOnlyRow) textOnlyRow.style.display = isTextOnly ? 'grid' : 'none';
+
+      if (startNumField) startNumField.style.display = isTextOnly ? 'none' : 'flex';
+      if (eccField) eccField.style.display = isTextOnly ? 'none' : 'flex';
+      if (eccBadge) eccBadge.style.display = isTextOnly ? 'none' : 'inline-block';
 
       var start = parseInt(startInp ? startInp.value : '1', 10);
       if (isNaN(start) || start < 0) start = 0;
@@ -672,6 +747,11 @@
       window.updateCustomFieldsVisibility();
       window.buildLabels();
     };
+
+    function renderIcon(key, hasCircle) {
+      if (!key || key === 'none') return '';
+      return hasCircle ? (ICONS[key] || '') : (RAW_ICONS[key] || '');
+    }
 
     window.buildLabels = function() {
       try {
@@ -706,7 +786,48 @@
         }
 
         container.innerHTML = '';
+        var htmlBuffer = '';
 
+        if (mode === 'text_only') {
+          var textOnlyInp = document.getElementById('textOnlyContent');
+          var textContent = (textOnlyInp && textOnlyInp.value) ? textOnlyInp.value.trim() : 'HOLD';
+
+          var topIconSelect = document.getElementById('topIcon');
+          var bottomIconSelect = document.getElementById('bottomIcon');
+          var topCircleCheck = document.getElementById('topCircleCheck');
+          var bottomCircleCheck = document.getElementById('bottomCircleCheck');
+
+          var topIconKey = topIconSelect ? topIconSelect.value : 'none';
+          var bottomIconKey = bottomIconSelect ? bottomIconSelect.value : 'none';
+          var topHasCircle = topCircleCheck ? topCircleCheck.checked : false;
+          var bottomHasCircle = bottomCircleCheck ? bottomCircleCheck.checked : false;
+
+          var topSvg = renderIcon(topIconKey, topHasCircle);
+          var bottomSvg = renderIcon(bottomIconKey, bottomHasCircle);
+
+          // Dynamic text size based on character count
+          var centerFontSize = 145;
+          if (textContent.length > 8) centerFontSize = 95;
+          else if (textContent.length > 5) centerFontSize = 120;
+
+          var topElement = topSvg ? '<g transform="translate(426, 95)">' + topSvg + '</g>' : '';
+          var bottomElement = bottomSvg ? '<g transform="translate(426, 490)">' + bottomSvg + '</g>' : '';
+
+          for (var i = 0; i < count; i++) {
+            htmlBuffer += '<div class="label-page">' +
+              '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 852 585">' +
+              '<rect width="852" height="585" fill="#ffffff"/>' +
+              topElement +
+              '<text x="426" y="292" font-family="system-ui, -apple-system, sans-serif" font-size="' + centerFontSize + '" font-weight="800" letter-spacing="1" text-anchor="middle" dominant-baseline="central" fill="#000000">' + textContent + '</text>' +
+              bottomElement +
+              '</svg></div>';
+          }
+
+          container.innerHTML = htmlBuffer;
+          return;
+        }
+
+        // Standard and Custom presets
         var title = "Curbside";
         var fontSize = 128;
         var iconKey = "bag_spark";
@@ -772,11 +893,6 @@
           fontSize = 115;
           iconKey = "key";
           qrPrefix = "Office Security";
-        } else if (mode === 'retail_claims') {
-          title = "Retail Claims";
-          fontSize = 118;
-          iconKey = "claims_tag";
-          qrPrefix = "Retail Claims";
         } else if (isCustom) {
           var customTitleInp = document.getElementById('customTitle');
           var customIconInp = document.getElementById('customIcon');
@@ -796,14 +912,8 @@
           fontSize = 128;
         }
 
-        function renderIcon(key, hasCircle) {
-          if (!key || key === 'none') return '';
-          return hasCircle ? (ICONS[key] || '') : (RAW_ICONS[key] || '');
-        }
-
         var rightSvg = renderIcon(iconKey, badgeCircle);
         var leftSvg = renderIcon(rawIconKey, leftCircle);
-        var htmlBuffer = '';
 
         for (var i = 0; i < count; i++) {
           var num = start + i;
