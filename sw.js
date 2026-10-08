@@ -1,5 +1,5 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v2.8.6';
+const CACHE_NAME = 'label-studio-v2.8.7';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
