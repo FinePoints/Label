@@ -19,7 +19,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First strategy
+// Network-First updates
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
