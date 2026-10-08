@@ -1,17 +1,14 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.6.0';
+const CACHE_NAME = 'label-studio-v3.1.2';
 
-// Files to cache for complete offline capability
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './sw.js',
-  './icon.svg',
-  './chicken-silhouette-bird-clipart.svg'
+  './icon.svg'
 ];
 
-// Install Event - Pre-cache core shell and immediately take over
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
@@ -20,7 +17,6 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event - Clear obsolete caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -35,9 +31,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event - Network-first for HTML, fallback to cache
 self.addEventListener('fetch', (event) => {
-  // Pass-through & cache QR code requests
   if (event.request.url.includes('api.qrserver.com')) {
     event.respondWith(
       fetch(event.request)
@@ -52,7 +46,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First for HTML navigation
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -67,7 +60,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Standard static assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)
