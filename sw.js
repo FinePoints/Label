@@ -1,5 +1,5 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v2.8.2';
+const CACHE_NAME = 'label-studio-v2.8.6';
 
 self.addEventListener('install', (event) => {
   self.skipWaiting();
@@ -19,7 +19,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First strategy: Always fetch live network first
+// Network-First strategy
 self.addEventListener('fetch', (event) => {
   if (event.request.mode === 'navigate') {
     event.respondWith(
