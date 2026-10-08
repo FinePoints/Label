@@ -1,16 +1,33 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.0.6';
+const CACHE_NAME = 'label-studio-v3.0.7';
 
+// Files to cache for complete offline performance
+const ASSETS = [
+  './',
+  './index.html',
+  './manifest.json',
+  './sw.js',
+  './icon.svg'
+];
+
+// Install Event - Pre-caches key resources
 self.addEventListener('install', (event) => {
-  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      console.log('[SW] Pre-caching resources...');
+      return cache.addAll(ASSETS);
+    }).then(() => self.skipWaiting())
+  );
 });
 
+// Activate Event - Discards old versions
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
+            console.log('[SW] Clearing outdated cache:', key);
             return caches.delete(key);
           }
         })
@@ -19,8 +36,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Network-First updates
+// Fetch Event - Dynamic Network-First update strategy
 self.addEventListener('fetch', (event) => {
+  // Allow normal loading for QR code API requests so they always paint cleanly
+  if (event.request.url.includes('api.qrserver.com')) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          // Cache the QR code patterns on the fly for later offline print jobs
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, response.clone());
+            return response;
+          });
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Fallback pattern for app code assets
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
