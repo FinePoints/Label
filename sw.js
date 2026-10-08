@@ -1,13 +1,14 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.5.0';
+const CACHE_NAME = 'label-studio-v3.6.0';
 
-// Files to cache for full offline capability
+// Files to cache for complete offline capability
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './sw.js',
-  './icon.svg'
+  './icon.svg',
+  './chicken-silhouette-bird-clipart.svg'
 ];
 
 // Install Event - Pre-cache core shell and immediately take over
@@ -19,7 +20,7 @@ self.addEventListener('install', (event) => {
   );
 });
 
-// Activate Event - Obliterate old cached versions
+// Activate Event - Clear obsolete caches
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
@@ -34,7 +35,7 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event - Network-first for fresh renders, offline fallback
+// Fetch Event - Network-first for HTML, fallback to cache
 self.addEventListener('fetch', (event) => {
   // Pass-through & cache QR code requests
   if (event.request.url.includes('api.qrserver.com')) {
@@ -51,7 +52,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-First for HTML navigation so updates show instantly
+  // Network-First for HTML navigation
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
