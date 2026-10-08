@@ -1,7 +1,7 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.2.0';
+const CACHE_NAME = 'label-studio-v3.5.0';
 
-// Files to cache for complete offline performance
+// Files to cache for full offline capability
 const ASSETS = [
   './',
   './index.html',
@@ -10,24 +10,22 @@ const ASSETS = [
   './icon.svg'
 ];
 
-// Install Event - Pre-caches key resources
+// Install Event - Pre-cache core shell and immediately take over
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[SW] Pre-caching resources...');
       return cache.addAll(ASSETS);
     }).then(() => self.skipWaiting())
   );
 });
 
-// Activate Event - Discards old versions
+// Activate Event - Obliterate old cached versions
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(
         keys.map((key) => {
           if (key !== CACHE_NAME) {
-            console.log('[SW] Clearing outdated cache:', key);
             return caches.delete(key);
           }
         })
@@ -36,14 +34,13 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch Event - Dynamic Network-First update strategy
+// Fetch Event - Network-first for fresh renders, offline fallback
 self.addEventListener('fetch', (event) => {
-  // Allow normal loading for QR code API requests so they always paint cleanly
+  // Pass-through & cache QR code requests
   if (event.request.url.includes('api.qrserver.com')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => {
-          // Cache the QR code patterns on the fly for later offline print jobs
           return caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, response.clone());
             return response;
@@ -54,7 +51,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Fallback pattern for app code assets
+  // Network-First for HTML navigation so updates show instantly
   if (event.request.mode === 'navigate') {
     event.respondWith(
       fetch(event.request)
@@ -69,6 +66,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
+  // Standard static assets
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       const fetchPromise = fetch(event.request)
