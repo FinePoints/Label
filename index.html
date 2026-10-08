@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 3.1.4</title>
+  <title>Derrick's Label Studio 3.2.0</title>
 
-  <!-- Anti-caching headers for instant updates -->
+  <!-- Aggressive anti-caching headers -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
@@ -16,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 3.1.4">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 3.2.0">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -281,7 +281,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 3.1.4</h1>
+        <h1>Derrick's Label Studio 3.2.0</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -957,33 +957,32 @@
       window.buildLabels();
     });
 
-    // Mobile Progressive App Worker Auto-Installer
+    // Forced Cache Busting & Service Worker Upgrade Routine
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' })
+        if ('caches' in window) {
+          caches.keys().then(function(cacheNames) {
+            cacheNames.forEach(function(name) {
+              if (name !== 'label-studio-v3.2.0') {
+                caches.delete(name);
+              }
+            });
+          });
+        }
+
+        navigator.serviceWorker.getRegistrations().then(function(registrations) {
+          for (var reg of registrations) {
+            reg.update();
+          }
+        });
+
+        navigator.serviceWorker.register('./sw.js?v=3.2.0', { updateViaCache: 'none' })
           .then(function(reg) {
             reg.update();
-            reg.addEventListener('updatefound', function() {
-              var newWorker = reg.installing;
-              if (!newWorker) return;
-              newWorker.addEventListener('statechange', function() {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  window.location.reload();
-                }
-              });
-            });
           })
           .catch(function(err) {
             console.warn('SW registration failed:', err);
           });
-
-        var refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', function() {
-          if (!refreshing) {
-            refreshing = true;
-            window.location.reload();
-          }
-        });
       });
     }
   </script>
