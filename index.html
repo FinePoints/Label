@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 2.8.2</title>
+  <title>Derrick's Label Studio 2.8.6</title>
 
   <!-- Prevent HTTP disk caching of index page -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -16,7 +16,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 2.8.2">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 2.8.6">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -281,7 +281,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 2.8.2</h1>
+        <h1>Derrick's Label Studio 2.8.6</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -328,7 +328,7 @@
               <option value="truck">Delivery Truck</option>
               <option value="pig">Pig</option>
               <option value="cow">Cow</option>
-              <option value="chicken">Chicken Drumstick</option>
+              <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
               <option value="claims_tag">Claims Tag</option>
@@ -355,7 +355,7 @@
               <option value="truck">Delivery Truck</option>
               <option value="pig">Pig</option>
               <option value="cow">Cow</option>
-              <option value="chicken">Chicken Drumstick</option>
+              <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
               <option value="claims_tag">Claims Tag</option>
@@ -391,7 +391,7 @@
               <option value="truck">Delivery Truck</option>
               <option value="pig">Pig</option>
               <option value="cow">Cow</option>
-              <option value="chicken">Chicken Drumstick</option>
+              <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
               <option value="claims_tag">Claims Tag</option>
@@ -419,7 +419,7 @@
               <option value="truck">Delivery Truck</option>
               <option value="pig">Pig</option>
               <option value="cow">Cow</option>
-              <option value="chicken">Chicken Drumstick</option>
+              <option value="chicken">Chicken</option>
               <option value="cheese">Cheese</option>
               <option value="deli_slicer">Deli Slicer</option>
               <option value="claims_tag">Claims Tag</option>
@@ -462,6 +462,9 @@
   <div id="labels-container"></div>
 
   <script>
+    // Chicken Linocut Data Image
+    var CHICKEN_SRC = 'data:image/png;base64,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';
+
     var ICONS = {
       none: '',
       bag_spark: '<circle cx="0" cy="0" r="62" fill="#000000"/><g transform="translate(0, -2)">' +
@@ -547,13 +550,8 @@
         '<circle cx="-10" cy="-9" r="3.5" fill="#000000"/>' +
         '<circle cx="10" cy="-9" r="3.5" fill="#000000"/>' +
         '</g>',
-      chicken: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="rotate(-35)">' +
-        '<ellipse cx="4" cy="-8" rx="21" ry="27"/>' +
-        '<path d="M -5 14 L -5 30 L 5 30 L 5 14 Z"/>' +
-        '<circle cx="-5" cy="31" r="5.5"/>' +
-        '<circle cx="5" cy="31" r="5.5"/>' +
-        '<circle cx="0" cy="30" r="4"/>' +
-        '</g>',
+      chicken: '<circle cx="0" cy="0" r="62" fill="#000000"/>' +
+        '<image href="' + CHICKEN_SRC + '" x="-48" y="-48" width="96" height="96" preserveAspectRatio="xMidYMid meet" style="filter: invert(1);"/>',
       cheese: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 2)">' +
         '<path d="M -26 12 L 28 12 L 28 -4 L -4 -22 L -26 -6 Z"/>' +
         '<circle cx="-12" cy="4" r="5" fill="#000000"/>' +
@@ -661,13 +659,7 @@
         '<circle cx="-10" cy="-9" r="3.5" fill="#ffffff"/>' +
         '<circle cx="10" cy="-9" r="3.5" fill="#ffffff"/>' +
         '</g></g>',
-      chicken: '<g fill="#000000" transform="scale(1.15) rotate(-35)">' +
-        '<ellipse cx="4" cy="-8" rx="21" ry="27"/>' +
-        '<path d="M -5 14 L -5 30 L 5 30 L 5 14 Z"/>' +
-        '<circle cx="-5" cy="31" r="5.5"/>' +
-        '<circle cx="5" cy="31" r="5.5"/>' +
-        '<circle cx="0" cy="30" r="4"/>' +
-        '</g>',
+      chicken: '<image href="' + CHICKEN_SRC + '" x="-52" y="-52" width="104" height="104" preserveAspectRatio="xMidYMid meet"/>',
       cheese: '<g transform="scale(1.15)"><g fill="#000000">' +
         '<path d="M -26 12 L 28 12 L 28 -4 L -4 -22 L -26 -6 Z"/>' +
         '<circle cx="-12" cy="4" r="5" fill="#ffffff"/>' +
