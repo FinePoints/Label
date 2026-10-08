@@ -1,5 +1,5 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.0.8';
+const CACHE_NAME = 'label-studio-v3.1.1';
 
 // Files to cache for complete offline performance
 const ASSETS = [
