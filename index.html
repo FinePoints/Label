@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Derrick's Label Studio 3.1.3</title>
+  <title>Derrick's Label Studio 3.1.4</title>
 
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
@@ -14,7 +14,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Label Studio 3.1.3">
+  <meta name="apple-mobile-web-app-title" content="Label Studio 3.1.4">
   <link rel="icon" type="image/svg+xml" href="icon.svg">
   <link rel="apple-touch-icon" href="icon.svg">
 
@@ -121,7 +121,7 @@
       text-transform: uppercase;
       letter-spacing: 0.8px;
     }
-    .field input, .field select {
+    .field input, .field select, .field textarea {
       width: 100%;
       height: 44px;
       padding: 8px 12px;
@@ -132,8 +132,14 @@
       background: rgba(2, 6, 23, 0.7);
       color: #f8fafc;
       outline: none;
+      font-family: inherit;
     }
-    .field input:focus, .field select:focus {
+    .field textarea {
+      height: 72px;
+      resize: vertical;
+      line-height: 1.3;
+    }
+    .field input:focus, .field select:focus, .field textarea:focus {
       border-color: #6366f1;
       background: rgba(15, 23, 42, 0.95);
     }
@@ -279,7 +285,7 @@
   <div class="no-print">
     <div class="panel-header">
       <div class="title-group">
-        <h1>Derrick's Label Studio 3.1.3</h1>
+        <h1>Derrick's Label Studio 3.1.4</h1>
         <p>2.84" &times; 1.95" Direct Thermal Fulfillment Labels</p>
       </div>
       <span id="eccBadge" class="badge-live badge-h">ECC: Level H (30%)</span>
@@ -307,8 +313,8 @@
       <!-- Text Only Mode Controls -->
       <div id="textOnlyRow" class="custom-row col-span-2">
         <div class="field col-span-2">
-          <label for="textOnlyContent">Center Text</label>
-          <input type="text" id="textOnlyContent" value="HOLD" oninput="window.buildLabels()">
+          <label for="textOnlyContent">Center Text (Enter for newline)</label>
+          <textarea id="textOnlyContent" oninput="window.buildLabels()">HOLD</textarea>
         </div>
         <div class="field col-span-2">
           <label for="textOnlyFontSize">Center Font Size (px)</label>
@@ -466,6 +472,7 @@
   </div>
 
   <div id="labels-container"></div>
+
   <script>
     var ICONS = {
       none: '',
@@ -498,7 +505,7 @@
         '</g></g>',
       frozen: '<circle cx="0" cy="0" r="62" fill="#000000"/>' +
         '<g stroke="#ffffff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
-          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="16" x2="27.7" y2="-16"/>' +
+          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="-16" x2="27.7" y2="-16"/>' +
           '<path d="M -9 -21 L 0 -15 L 9 -21"/><path d="M -9 21 L 0 15 L 9 21"/>' +
           '<path d="M -23 -3 L -14 -8 L -14 -18"/><path d="M 23 3 L 14 8 L 14 18"/>' +
           '<path d="M -23 3 L -14 8 L -14 18"/><path d="M 23 -3 L 14 -8 L 14 -18"/>' +
@@ -573,8 +580,8 @@
       deli_slicer: '<circle cx="0" cy="0" r="62" fill="#000000"/><g fill="#ffffff" transform="translate(0, 2)">' +
         '<rect x="-28" y="16" width="56" height="8" rx="2"/>' +
         '<circle cx="6" cy="-3" r="21"/>' +
-        '<circle cx="6" cy="-3" r="14" fill="#000000"/>' +
-        '<circle cx="6" cy="-3" r="4.5" fill="#ffffff"/>' +
+        '<circle cx="6" cy="-3" r="14" fill="#ffffff"/>' +
+        '<circle cx="6" cy="-3" r="4.5" fill="#000000"/>' +
         '<polygon points="-24,14 -12,-8 -2,-8 -12,14"/>' +
         '<rect x="-18" y="-18" width="6" height="12" rx="2"/>' +
         '</g>',
@@ -617,7 +624,7 @@
         '</g></g>',
       frozen: '<g transform="scale(1.2)">' +
         '<g stroke="#000000" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none">' +
-          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="16" x2="27.7" y2="-16"/>' +
+          '<line x1="0" y1="-32" x2="0" y2="32"/><line x1="-27.7" y1="-16" x2="27.7" y2="16"/><line x1="-27.7" y1="-16" x2="27.7" y2="-16"/>' +
           '<path d="M -9 -21 L 0 -15 L 9 -21"/><path d="M -9 21 L 0 15 L 9 21"/>' +
           '<path d="M -23 -3 L -14 -8 L -14 -18"/><path d="M 23 3 L 14 8 L 14 18"/>' +
           '<path d="M -23 3 L -14 8 L -14 18"/><path d="M 23 -3 L 14 -8 L 14 -18"/>' +
@@ -702,6 +709,7 @@
         '<text x="6" y="11" font-family="system-ui, sans-serif" font-size="18" font-weight="900" text-anchor="middle" fill="#ffffff">$</text>' +
         '</g>'
     };
+
     window.updateCustomFieldsVisibility = function() {
       var sel = document.getElementById('labelType');
       var customRow = document.getElementById('customRow');
@@ -797,7 +805,9 @@
 
         if (mode === 'text_only') {
           var textOnlyInp = document.getElementById('textOnlyContent');
-          var textContent = (textOnlyInp && textOnlyInp.value) ? textOnlyInp.value.trim() : 'HOLD';
+          var rawText = (textOnlyInp && textOnlyInp.value !== undefined) ? textOnlyInp.value : 'HOLD';
+          var lines = rawText.split('\n');
+          if (lines.length === 0) lines = [''];
 
           var textFontSizeInp = document.getElementById('textOnlyFontSize');
           var centerFontSize = textFontSizeInp ? parseInt(textFontSizeInp.value, 10) : 130;
@@ -819,12 +829,24 @@
           var topElement = topSvg ? '<g transform="translate(426, 95)">' + topSvg + '</g>' : '';
           var bottomElement = bottomSvg ? '<g transform="translate(426, 490)">' + bottomSvg + '</g>' : '';
 
+          var lineHeight = centerFontSize * 1.15;
+          var totalBlockHeight = (lines.length - 1) * lineHeight;
+          var startY = 292 - (totalBlockHeight / 2);
+
+          var tspanMarkup = '';
+          for (var j = 0; j < lines.length; j++) {
+            var lineY = startY + (j * lineHeight);
+            tspanMarkup += '<tspan x="426" y="' + lineY + '">' + (lines[j] === '' ? ' ' : lines[j]) + '</tspan>';
+          }
+
           for (var i = 0; i < count; i++) {
             htmlBuffer += '<div class="label-page">' +
               '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 852 585">' +
               '<rect width="852" height="585" fill="#ffffff"/>' +
               topElement +
-              '<text x="426" y="292" font-family="system-ui, -apple-system, sans-serif" font-size="' + centerFontSize + '" font-weight="800" letter-spacing="1" text-anchor="middle" dominant-baseline="central" fill="#000000">' + textContent + '</text>' +
+              '<text font-family="system-ui, -apple-system, sans-serif" font-size="' + centerFontSize + '" font-weight="800" letter-spacing="1" text-anchor="middle" dominant-baseline="central" fill="#000000">' +
+              tspanMarkup +
+              '</text>' +
               bottomElement +
               '</svg></div>';
           }
