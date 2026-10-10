@@ -1,5 +1,5 @@
 // sw.js - Derrick's Label Studio Service Worker
-const CACHE_NAME = 'label-studio-v3.1.3';
+const CACHE_NAME = 'label-studio-v3.1.4';
 
 const ASSETS = [
   './',
